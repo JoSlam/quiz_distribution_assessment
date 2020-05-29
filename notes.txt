@@ -1,0 +1,31 @@
+Important classes:
+    - Question
+        => QuestionID(Global uuid): Integer
+        => QuestionNo(Quiz uuid): Integer
+        => DisplayText: String
+        
+    - Quiz
+        => QuizID(Global uuid): Integer
+        => Questions: Question[]
+    
+    - QuizResponse
+        => Answer: Boolean
+
+    - QuizAnswer
+        => Answer: Boolean
+
+
+Server requirements:
+    - Use 2 quizzes
+    - Max 10 questions per quiz
+    - Distribute quizzes randomly
+    - Grade quiz using preset answers
+    - Store quiz results
+    - Fetch and send results of quiz
+
+
+Client requirements:
+    - Request quiz
+    - Automate quiz responses (randomize boolean)
+    - Send responses to server
+    - Request quiz results
