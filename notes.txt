@@ -3,16 +3,11 @@ Important classes:
         => QuestionID(Global uuid): Integer
         => QuestionNo(Quiz uuid): Integer
         => DisplayText: String
+        => Answer: Boolean
         
     - Quiz
         => QuizID(Global uuid): Integer
         => Questions: Question[]
-    
-    - QuizResponse
-        => Answer: Boolean
-
-    - QuizAnswer
-        => Answer: Boolean
 
 
 Server requirements:
@@ -28,4 +23,6 @@ Client requirements:
     - Request quiz
     - Automate quiz responses (randomize boolean)
     - Send responses to server
-    - Request quiz results
+    - Request quiz results 
+        => String
+        => List of type QuizResult

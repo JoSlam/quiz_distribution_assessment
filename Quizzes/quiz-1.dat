@@ -1,0 +1,5 @@
+Is the sky blue?, True
+Are aliens real?, False
+Can High Availability improve distributed system performance?, True
+Can action replication induce high network loads?, True
+Can a distributed system be considered transparent if the user has knowledge of some components of the system?, False
