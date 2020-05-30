@@ -1,17 +1,14 @@
-import java.util.ArrayList;
+import java.rmi.RemoteException;
 
-import Models.Quiz;
-import Services.QuizLoaderService;
+import Tests.RMIServerTests;
 
 /**
  * Main
  */
 public class Main {
 
-    public static void main(String[] args) {
-        ArrayList<Quiz> quizList = QuizLoaderService.getQuizzes();
-        for (Quiz quiz : quizList) {
-            System.out.println(quiz.toString());
-        }
+    public static void main(String[] args) throws RemoteException {
+        RMIServerTests testSuite = new RMIServerTests();
+        testSuite.runSuite();
     }
 }

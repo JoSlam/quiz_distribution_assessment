@@ -11,9 +11,8 @@ Important classes:
 
 
 Server requirements:
-    - Use 2 quizzes
-    - Max 10 questions per quiz
-    - Distribute quizzes randomly
+    - Use 2 quizzes (Max 10 questions per quiz)
+    - Distribute quizzes randomly (done)
     - Grade quiz using preset answers
     - Store quiz results
     - Fetch and send results of quiz
