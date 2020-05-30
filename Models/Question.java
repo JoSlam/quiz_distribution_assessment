@@ -36,4 +36,15 @@ public class Question implements Serializable {
         this.answer = answer;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builtString = new StringBuilder("");
+        
+        builtString.append(String.format("\n\nQuestion #%d", questionNo));
+        builtString.append("\n" + displayText);
+        builtString.append(String.format("\nAnswer: %s", answer.toString()));
+
+        return builtString.toString();
+    }
+
 }

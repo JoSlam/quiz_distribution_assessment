@@ -44,10 +44,10 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
     }
     
 
-    private void gradeSubmission(Quiz quiz, Submission submission) {
-        if (submission != null && quiz != null) {
-            if (!submission.isGraded()) {
-                ArrayList<Answer> submittedAnswers = submission.getAnswers();
+    private void gradeSubmission(Quiz quiz, Submission quizSub) {
+        if (quizSub != null && quiz != null) {
+            if (!quizSub.isGraded()) {
+                ArrayList<Answer> submittedAnswers = quizSub.getAnswers();
                 ArrayList<Question> incorrect = new ArrayList<Question>();
 
                 for (Question question : quiz.getQuestions()) {
@@ -62,7 +62,9 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
                         incorrect.add(question);
                     }
                 }
-                submission.setIncorrect(incorrect);
+                quizSub.setIncorrect(incorrect);
+                quizSub.setGraded(true);
+                submissions.add(quizSub);
             }
         }
     }

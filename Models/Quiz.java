@@ -16,7 +16,7 @@ public class Quiz implements Serializable {
     }
 
     private static synchronized int createID() {
-        return idCounter++;
+        return ++idCounter;
     }
 
     public Integer getQuizID() {

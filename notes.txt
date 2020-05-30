@@ -13,9 +13,9 @@ Important classes:
 Server requirements:
     - Use 2 quizzes (Max 10 questions per quiz)
     - Distribute quizzes randomly (done)
-    - Grade quiz using preset answers
-    - Store quiz results
-    - Fetch and send results of quiz
+    - Grade quiz using preset answers (done)
+    - Store quiz results (done)
+    - Fetch and send results of quiz (done)
 
 
 Client requirements:
@@ -25,3 +25,9 @@ Client requirements:
     - Request quiz results 
         => String
         => List of type QuizResult
+
+
+- Move auto-generate and submit option to only when quiz is generated
+- Store submission IDs in list
+    => Display submission IDs for choice by user
+    => Retrieve graded submission and display results
