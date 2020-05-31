@@ -19,12 +19,12 @@ Server requirements:
 
 
 Client requirements:
-    - Request quiz
-    - Automate quiz responses (randomize boolean)
-    - Send responses to server
-    - Request quiz results 
-        => String
-        => List of type QuizResult
+    - Request quiz (done)
+    - Automate quiz responses (randomize boolean) (done)
+    - Send responses to server (done)
+        => Submit a QuizSubmission 
+    - Request quiz results (done)
+        => Return graded submission
 
 
 - Move auto-generate and submit option to only when quiz is generated

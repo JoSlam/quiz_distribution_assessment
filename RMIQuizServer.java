@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Models.Quiz;
+import Models.QuizResult;
+import Models.QuizSubmission;
 import Models.Answer;
 import Models.Question;
-import Models.Submission;
 import Services.QuizLoaderService;
 import Interfaces.RMIQuizServerIntf;
 
@@ -15,11 +16,11 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
     private static final long serialVersionUID = 1L;
 
     private ArrayList<Quiz> quizList;
-    private ArrayList<Submission> submissions;
+    private ArrayList<QuizResult> submissions;
     private Random rng;
 
     public RMIQuizServer() throws RemoteException {
-        submissions = new ArrayList<Submission>();
+        submissions = new ArrayList<QuizResult>();
         quizList = QuizLoaderService.getQuizzes();
         rng = new Random();
     }
@@ -29,59 +30,49 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
         return quizList.get(index);
     }
 
-    public Submission getQuizResult(Integer submissionID) throws RemoteException {
+    public QuizResult getQuizResult(Integer submissionID) throws RemoteException {
         return findSubmission(submissionID);
     }
 
-    public Submission submit(Submission submission) throws RemoteException {
+    public QuizResult submit(QuizSubmission submission) throws RemoteException {
+        QuizResult result = null;
         if (submission != null) {
             Quiz quiz = findQuiz(submission.getQuizID());
-            gradeSubmission(quiz, submission);
+            result = gradeSubmission(quiz, submission);
         }
-        return submission;
+        return result;
     }
 
-    private void gradeSubmission(Quiz quiz, Submission quizSub) {
+    private QuizResult gradeSubmission(Quiz quiz, QuizSubmission quizSub) {
+        QuizResult result = null;
         if (quizSub != null && quiz != null) {
-            if (!quizSub.isGraded()) {
-                ArrayList<Answer> submittedAnswers = quizSub.getAnswers();
-                ArrayList<Question> incorrect = new ArrayList<Question>();
+            ArrayList<Answer> submittedAnswers = quizSub.getAnswers();
+            ArrayList<Question> incorrect = new ArrayList<Question>();
 
-                for (Question question : quiz.getQuestions()) {
-                    Answer found = submittedAnswers.stream()
-                            .filter(answer -> question.getQuestionNo().equals(answer.getQuestionNo())).findFirst()
-                            .orElse(null);
+            for (Question question : quiz.getQuestions()) {
+                Answer found = submittedAnswers.stream()
+                        .filter(answer -> question.getQuestionNo().equals(answer.getQuestionNo())).findFirst()
+                        .orElse(null);
 
-                    if (found != null) {
-                        if (question.getAnswer() != found.getResponse()) {
-                            incorrect.add(question);
-                        }
-                    } else {
+                if (found != null) {
+                    if (question.getAnswer() != found.getResponse()) {
                         incorrect.add(question);
                     }
+                } else {
+                    incorrect.add(question);
                 }
-                quizSub.setIncorrect(incorrect);
-                quizSub.setGraded(true);
-                submissions.add(quizSub);
             }
+            result = new QuizResult(quiz.getQuizID(), submittedAnswers, incorrect);
+            submissions.add(result);
         }
+        return result;
     }
 
     private Quiz findQuiz(Integer quizID) {
         return quizList.stream().filter(i -> i.getQuizID().equals(quizID)).findFirst().orElse(null);
     }
 
-    private Submission findSubmission(Integer submissionID) {
-        return submissions.stream().filter(i -> i.getSubmissionID().equals(submissionID)).findFirst().orElse(null);
-    }
-
-    @Override
-    public ArrayList<Quiz> getQuizList() throws RemoteException {
-        return quizList;
-    }
-
-    @Override
-    public ArrayList<Submission> getSubList() throws RemoteException {
-        return submissions;
+    private QuizResult findSubmission(Integer submissionID) {
+        return submissions.stream().filter(i -> i.getResultID().equals(submissionID)).findFirst().orElse(null);
     }
 }

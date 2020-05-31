@@ -9,13 +9,14 @@ import Menu.ClientMenu;
 import Models.Answer;
 import Models.Question;
 import Models.Quiz;
-import Models.Submission;
+import Models.QuizSubmission;
+import Models.QuizResult;
 
 public class RMIQuizClient {
     private static String serverName = "QuizServer";
 
     public static void main(String[] args) {
-        ArrayList<Integer> submissionIDs = new ArrayList<Integer>();
+        ArrayList<Integer> resultIDs = new ArrayList<Integer>();
         ClientMenu menuDisplay = new ClientMenu();
         Scanner in = new Scanner(System.in);
         RMIQuizServerIntf quizServerIntf = null;
@@ -37,20 +38,19 @@ public class RMIQuizClient {
 
                         int subChoice = in.nextInt();
                         if (subChoice == 1) {
-                            Submission newSubmission = generateQuizSubmission(quiz);
-                            Submission gradedSubmission = quizServerIntf.submit(newSubmission);
+                            QuizSubmission newSubmission = generateQuizSubmission(quiz);
+                            QuizResult quizResult = quizServerIntf.submit(newSubmission);
 
-                            if (gradedSubmission != null) {
-                                submissionIDs.add(newSubmission.getSubmissionID());
-                                System.out.println("\nResult:");
-                                System.out.println(gradedSubmission.toString());
+                            if (quizResult != null) {
+                                resultIDs.add(quizResult.getResultID());
+                                System.out.println(quizResult.toString());
                             }
                         }
                     }
                 } else if (choice == 2) {
                     String message = "";
-                    if (submissionIDs.size() > 0) {
-                        Submission foundSubmission = findSubmission(in, quizServerIntf, submissionIDs);
+                    if (resultIDs.size() > 0) {
+                        QuizResult foundSubmission = findSubmission(in, quizServerIntf, resultIDs);
                         message = foundSubmission.toString();
                     } else {
                         message = "\nNo submissions exist";
@@ -58,6 +58,7 @@ public class RMIQuizClient {
                     System.out.println(message);
                 }
 
+                //Get next choice
                 choice = menuDisplay.getUserChoice(in);
             }
         } catch (Exception e) {
@@ -86,11 +87,11 @@ public class RMIQuizClient {
         return quizServerIntf;
     }
 
-    private static Submission generateQuizSubmission(Quiz quiz) {
-        return (quiz != null) ? new Submission(quiz.getQuizID(), generateAnswers(quiz.getQuestions())) : null;
+    private static QuizSubmission generateQuizSubmission(Quiz quiz) {
+        return (quiz != null) ? new QuizSubmission(quiz.getQuizID(), generateAnswers(quiz.getQuestions())) : null;
     }
 
-    private static Submission findSubmission(Scanner in, RMIQuizServerIntf quizServerIntf,
+    private static QuizResult findSubmission(Scanner in, RMIQuizServerIntf quizServerIntf,
             ArrayList<Integer> submissionIDs) throws RemoteException {
 
         System.out.println("\nSubmission list: ");

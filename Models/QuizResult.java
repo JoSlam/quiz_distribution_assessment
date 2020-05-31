@@ -3,29 +3,28 @@ package Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Submission implements Serializable {
+public class QuizResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static int idCounter = 0;
 
-    private Integer submissionID;
+    private Integer resultID;
     private Integer quizID;
-    private Boolean isGraded = false;
     private ArrayList<Answer> answers = new ArrayList<Answer>();
     private ArrayList<Question> incorrect = new ArrayList<Question>();
 
-    public Submission() {
-        submissionID = createID();
+    public QuizResult() {
+        resultID = createID();
     }
 
-    public Submission(Integer quizID, ArrayList<Answer> answers) {
-        submissionID = createID();
+    public QuizResult(Integer quizID, ArrayList<Answer> answers) {
+        resultID = createID();
         this.quizID = quizID;
         this.answers = answers;
     }
 
-    public Submission(Integer quizID, ArrayList<Answer> answers, ArrayList<Question> incorrect) {
-        submissionID = createID();
+    public QuizResult(Integer quizID, ArrayList<Answer> answers, ArrayList<Question> incorrect) {
+        resultID = createID();
         this.quizID = quizID;
         this.answers = answers;
         this.incorrect = incorrect;
@@ -35,16 +34,8 @@ public class Submission implements Serializable {
         return ++idCounter;
     }
 
-    public Boolean isGraded() {
-        return isGraded;
-    }
-
-    public void setGraded(Boolean graded) {
-        this.isGraded = graded;
-    }
-
-    public Integer getSubmissionID() {
-        return submissionID;
+    public Integer getResultID() {
+        return resultID;
     }
 
     public Integer getQuizID() {
@@ -75,7 +66,7 @@ public class Submission implements Serializable {
     public String toString() {
         StringBuilder builtString = new StringBuilder("");
 
-        builtString.append(String.format("\nSubmission: %d \nFor Quiz: %d", submissionID, quizID));
+        builtString.append(String.format("\nResult: %d \nFor Quiz: %d", resultID, quizID));
         for (Answer answer : answers) {
             builtString.append(
                     String.format("\nQuestion %d: %s", answer.getQuestionNo(), answer.getResponse().toString()));
