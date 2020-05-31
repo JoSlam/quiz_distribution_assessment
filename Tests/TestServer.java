@@ -1,4 +1,4 @@
-package Server;
+/* package Tests;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,7 +12,7 @@ import Models.Submission;
 import Services.QuizLoaderService;
 import Interfaces.RMIQuizServerIntf;
 
-public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerIntf {
+public class TestServer extends UnicastRemoteObject implements RMIQuizServerIntf {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
     private ArrayList<Submission> submissions;
     private Random rng;
 
-    public RMIQuizServer() throws RemoteException {
+    public TestServer() throws RemoteException {
         submissions = new ArrayList<Submission>();
         quizList = QuizLoaderService.getQuizzes();
         rng = new Random();
@@ -77,4 +77,4 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
     private Submission findSubmission(Integer submissionID) {
         return submissions.stream().filter(i -> i.getSubmissionID() == submissionID).findFirst().get();
     }
-}
+} */

@@ -1,14 +1,13 @@
-import java.rmi.RemoteException;
+// import java.rmi.RemoteException;
+// import Tests.RMIServerTests;
 
-import Tests.RMIServerTests;
+// /**
+//  * Main
+//  */
+// public class Main {
 
-/**
- * Main
- */
-public class Main {
-
-    public static void main(String[] args) throws RemoteException {
-        RMIServerTests testSuite = new RMIServerTests();
-        testSuite.runSuite();
-    }
-}
+//     public static void main(String[] args) throws RemoteException {
+//         RMIServerTests testSuite = new RMIServerTests();
+//         testSuite.runSuite();
+//     }
+// }

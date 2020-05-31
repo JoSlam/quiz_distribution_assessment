@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Quiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static int idCounter = 1;
+    private static int idCounter = 0;
 
     private Integer quizID;
     private ArrayList<Question> questions;
@@ -37,7 +37,7 @@ public class Quiz implements Serializable {
 
         quizString.append("\nQuiz: " + quizID);
         for (Question question : questions) {
-            quizString.append("\n" + question.getDisplayText());
+            quizString.append(String.format("\n%d. %s", question.getQuestionNo(), question.getDisplayText()));
         }
 
         return quizString.toString();

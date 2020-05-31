@@ -1,10 +1,10 @@
-package Client.Menu;
+package Menu;
 
 /* 
 * Name: Joshua Lambert
 * ID: 815007658
 * Course: COMP 6601
-* Assignment #2
+* Final assessment
 */
 
 

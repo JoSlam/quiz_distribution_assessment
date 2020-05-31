@@ -1,8 +1,9 @@
+package Menu;
 /* 
 * Name: Joshua Lambert
 * ID: 815007658
 * Course: COMP 6601
-* Assignment #2
+* Final assessment
 */
 
 /* 
@@ -10,7 +11,6 @@
     * Handles the display of the selection menu to the client
 */
 
-package Client.Menu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 public class ClientMenu {
     private ArrayList<DisplayOption> options = null;
-    private static Integer quitIdentifier = 4;
+    private static Integer quitIdentifier = 3;
 
     public ClientMenu() {
         this.options = ClientMenu.getDisplayOptions();
@@ -41,18 +41,18 @@ public class ClientMenu {
 
     /* Displays menu options to client */
     public void displayMenu(){
+        System.out.println("\n");
         for (DisplayOption option : options) {
             System.out.printf("%d. %s\n", option.getOptionIdentifier(), option.getMessage());
         }
-        System.out.printf("Please select an option (1-%d): ", ClientMenu.getQuitIdentifier());
+        System.out.printf("Select an option (1-%d): ", ClientMenu.getQuitIdentifier());
     }
 
     private static ArrayList<DisplayOption> getDisplayOptions() {
         ArrayList<DisplayOption> options = new ArrayList<>();
 
-        options.add(new DisplayOption(1, "Get quiz"));
-        options.add(new DisplayOption(2, "Auto-generate and submit quiz response"));
-        options.add(new DisplayOption(3, "Get quiz result"));
+        options.add(new DisplayOption(1, "Get quiz."));
+        options.add(new DisplayOption(2, "Get quiz result."));
         options.add(new DisplayOption(ClientMenu.quitIdentifier, "Quit."));
         
         return options;

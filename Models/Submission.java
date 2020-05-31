@@ -11,11 +11,24 @@ public class Submission implements Serializable {
     private Integer submissionID;
     private Integer quizID;
     private Boolean isGraded = false;
-    private ArrayList<Answer> answers;
-    private ArrayList<Question> incorrect;
+    private ArrayList<Answer> answers = new ArrayList<Answer>();
+    private ArrayList<Question> incorrect = new ArrayList<Question>();
 
     public Submission() {
         submissionID = createID();
+    }
+
+    public Submission(Integer quizID, ArrayList<Answer> answers) {
+        submissionID = createID();
+        this.quizID = quizID;
+        this.answers = answers;
+    }
+
+    public Submission(Integer quizID, ArrayList<Answer> answers, ArrayList<Question> incorrect) {
+        submissionID = createID();
+        this.quizID = quizID;
+        this.answers = answers;
+        this.incorrect = incorrect;
     }
 
     private static synchronized int createID() {
@@ -74,8 +87,8 @@ public class Submission implements Serializable {
             builtString.append(String.format("\n\nQuiz score: %d", score));
             builtString.append(String.format("\nIncorrect questions: %d", incorrect.size()));
             for (Question question : incorrect) {
-                Answer givenAnswer = answers.stream().filter(i -> i.getQuestionNo() == question.getQuestionNo())
-                        .findFirst().get();
+                Answer givenAnswer = answers.stream().filter(i -> i.getQuestionNo().equals(question.getQuestionNo()))
+                        .findFirst().orElse(null);
                 builtString.append(question.toString());
 
                 if (givenAnswer != null) {
@@ -88,4 +101,5 @@ public class Submission implements Serializable {
 
         return builtString.toString();
     }
+
 }

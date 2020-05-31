@@ -1,10 +1,10 @@
-package Tests;
+/* package Tests;
 
 import Models.Answer;
 import Models.Question;
 import Models.Quiz;
 import Models.Submission;
-import Server.RMIQuizServer;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class RMIServerTests {
 
-    private RMIQuizServer quizServer;
+    private TestServer quizServer;
 
     public RMIServerTests() {
         try {
-            quizServer = new RMIQuizServer();
+            quizServer = new TestServer();
         } catch (RemoteException e) {
             System.out.println("Unable to connect to server.");
         }
@@ -24,8 +24,8 @@ public class RMIServerTests {
 
     public void runSuite() throws RemoteException {
         ArrayList<TestResult> results = new ArrayList<TestResult>();
-        // results.add(testGetQuiz());
-        // results.add(testSubmitQuiz());
+        results.add(testGetQuiz());
+        results.add(testSubmitQuiz());
         results.add(testGetQuizResult());
 
         for (TestResult testResult : results) {
@@ -118,4 +118,4 @@ public class RMIServerTests {
         System.out.println(String.format("\n%s result: %s", testName, result.toString()));
         System.out.println("==============================================");
     }
-}
+} */
