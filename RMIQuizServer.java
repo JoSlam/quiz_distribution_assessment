@@ -55,7 +55,7 @@ public class RMIQuizServer extends UnicastRemoteObject implements RMIQuizServerI
                         .orElse(null);
 
                 if (found != null) {
-                    if (question.getAnswer() != found.getResponse()) {
+                    if (!question.getAnswer().equals(found.getResponse())) {
                         incorrect.add(question);
                     }
                 } else {

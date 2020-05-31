@@ -24,20 +24,28 @@ public class RMIQuizClient {
         try {
             quizServerIntf = tryConnectToServer(in);
 
-            Integer choice = menuDisplay.getUserChoice(in);
-            while (choice != ClientMenu.getQuitIdentifier()) {
+            Integer choice = null;
+            while ((choice = menuDisplay.getUserChoice(in)).intValue() != ClientMenu.getQuitIdentifier().intValue()) {
 
                 if (choice == 1) {
                     Quiz quiz = quizServerIntf.getQuiz();
 
                     if (quiz != null) {
                         System.out.println(quiz.toString());
-                        System.out.println("\n\n1. Generate answers and submit quiz");
+                        System.out.println("\n\n0. Quit");
+                        System.out.println("1. Generate answers and submit quiz");
                         System.out.println("2. Return to main menu");
-                        System.out.println("Select an option (1-2): ");
+                        System.out.println("Select an option (0-2): ");
 
                         int subChoice = in.nextInt();
-                        if (subChoice == 1) {
+                        while(subChoice < 0 || subChoice > 2){
+                            System.out.println("Choose an option from the list.");
+                            subChoice = in.nextInt();
+                        }
+
+                        if (subChoice == 0) {
+                            continue;
+                        } else if (subChoice == 1) {
                             QuizSubmission newSubmission = generateQuizSubmission(quiz);
                             QuizResult quizResult = quizServerIntf.submit(newSubmission);
 
@@ -48,18 +56,13 @@ public class RMIQuizClient {
                         }
                     }
                 } else if (choice == 2) {
-                    String message = "";
                     if (resultIDs.size() > 0) {
-                        QuizResult foundSubmission = findSubmission(in, quizServerIntf, resultIDs);
-                        message = foundSubmission.toString();
-                    } else {
-                        message = "\nNo submissions exist";
+                        findSubmission(in, quizServerIntf, resultIDs);
                     }
-                    System.out.println(message);
+                    else {
+                        System.out.println("\nNo submissions exist");
+                    }
                 }
-
-                //Get next choice
-                choice = menuDisplay.getUserChoice(in);
             }
         } catch (Exception e) {
             System.out.print("Exception: " + e);
@@ -91,18 +94,23 @@ public class RMIQuizClient {
         return (quiz != null) ? new QuizSubmission(quiz.getQuizID(), generateAnswers(quiz.getQuestions())) : null;
     }
 
-    private static QuizResult findSubmission(Scanner in, RMIQuizServerIntf quizServerIntf,
-            ArrayList<Integer> submissionIDs) throws RemoteException {
+    private static void findSubmission(Scanner in, RMIQuizServerIntf quizServerIntf, ArrayList<Integer> submissionIDs)
+            throws RemoteException {
 
         System.out.println("\nSubmission list: ");
+        System.out.println("\n0. Quit");
         submissionIDs.forEach(id -> System.out.println(String.format("Submission ID: %d", id)));
         System.out.printf("\nChoose from submissions made: ");
 
         Integer submissionID = in.nextInt();
-        while (submissionID != null && !submissionIDs.contains(submissionID)) {
+        while (submissionID.intValue() != 0 && !submissionIDs.contains(submissionID)) {
             System.out.println("Choose from the list of submissions made");
+            submissionID = in.nextInt();
         }
-        return quizServerIntf.getQuizResult(submissionID);
+
+        QuizResult result = quizServerIntf.getQuizResult(submissionID);
+        String message = (result != null) ? result.toString() : "\nNo quiz results exist";
+        System.out.println(message);
     }
 
     private static ArrayList<Answer> generateAnswers(ArrayList<Question> questions) {
